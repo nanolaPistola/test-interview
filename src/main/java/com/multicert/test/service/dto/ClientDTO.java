@@ -1,18 +1,17 @@
 package com.multicert.test.service.dto;
 
+import com.multicert.test.domain.Client;
 import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.annotation.Nullable;
 import javax.validation.constraints.*;
 
 /**
- * A DTO for the {@link com.multicert.test.domain.Storage} entity.
+ * A DTO for the {@link Client} entity.
  */
 @EqualsAndHashCode
-public class StorageDTO implements Serializable {
+public class ClientDTO implements Serializable {
 
     private Long id;
 
@@ -71,15 +70,15 @@ public class StorageDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof StorageDTO)) {
+        if (!(o instanceof ClientDTO)) {
             return false;
         }
 
-        StorageDTO storageDTO = (StorageDTO) o;
+        ClientDTO clientDTO = (ClientDTO) o;
         if (this.id == null) {
             return false;
         }
-        return Objects.equals(this.id, storageDTO.id);
+        return Objects.equals(this.id, clientDTO.id);
     }
 
     @Override

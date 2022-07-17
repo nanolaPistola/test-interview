@@ -1,6 +1,6 @@
 package com.multicert.test.repository;
 
-import com.multicert.test.domain.Storage;
+import com.multicert.test.domain.Client;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,9 +13,9 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface StorageRepository extends JpaRepository<Storage, Long> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    Optional<Storage> findByNif(String nif);
+    Optional<Client> findByNif(String nif);
 
-    List<Storage> findByNameContainingIgnoreCase(@Param("name")String name);
+    List<Client> findByNameContainingIgnoreCase(@Param("name")String name);
 }

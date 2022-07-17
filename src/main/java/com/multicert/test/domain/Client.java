@@ -10,8 +10,8 @@ import javax.validation.constraints.*;
  * A Storage.
  */
 @Entity
-@Table(name = "storage")
-public class Storage implements Serializable {
+@Table(name = "client", uniqueConstraints = {@UniqueConstraint(columnNames = "nif")})
+public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class Storage implements Serializable {
         return this.id;
     }
 
-    public Storage id(Long id) {
+    public Client id(Long id) {
         this.setId(id);
         return this;
     }
@@ -57,7 +57,7 @@ public class Storage implements Serializable {
         return this.name;
     }
 
-    public Storage name(String name) {
+    public Client name(String name) {
         this.setName(name);
         return this;
     }
@@ -70,7 +70,7 @@ public class Storage implements Serializable {
         return this.nif;
     }
 
-    public Storage nif(String nif) {
+    public Client nif(String nif) {
         this.setNif(nif);
         return this;
     }
@@ -83,7 +83,7 @@ public class Storage implements Serializable {
         return this.address;
     }
 
-    public Storage address(String address) {
+    public Client address(String address) {
         this.setAddress(address);
         return this;
     }
@@ -96,7 +96,7 @@ public class Storage implements Serializable {
         return this.phone;
     }
 
-    public Storage phone(Integer phone) {
+    public Client phone(Integer phone) {
         this.setPhone(phone);
         return this;
     }
@@ -112,10 +112,10 @@ public class Storage implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Storage)) {
+        if (!(o instanceof Client)) {
             return false;
         }
-        return id != null && id.equals(((Storage) o).id);
+        return id != null && id.equals(((Client) o).id);
     }
 
     @Override
