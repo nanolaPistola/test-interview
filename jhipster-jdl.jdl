@@ -1,0 +1,13 @@
+
+entity Storage {
+	name String required,
+    nif String required,
+    address String,
+    phone Integer min(9)
+}
+
+paginate Storage with pagination
+dto * with mapstruct
+service * with serviceClass
+
+
