@@ -4,10 +4,12 @@ import com.multicert.test.service.ClientService;
 import com.multicert.test.service.dto.ClientDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
@@ -34,13 +36,28 @@ public class ClientImplementation implements ClientResource{
 
     @Override
     public Response createClient(ClientDTO clientDTO) {
-        return Response.status(Response.Status.CREATED).entity(clientService.save(clientDTO)).build();
+        try {
+            return Response.status(Response.Status.CREATED).entity(clientService.save(clientDTO)).build();
+        } catch (DataIntegrityViolationException | ConstraintViolationException e) {
+            log.error("createClient | Exception {}; cause : {} message: {}, localizedMessage: {}", e.getClass().getName(), e.getCause(), e.getMessage(), e.getLocalizedMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(Collections.singletonMap("error", e.getMessage())).build();
+
+        } catch (Exception e) {
+            log.error("createClient | Exception {}; cause : {} message: {}, localizedMessage: {}", e.getClass().getName(), e.getCause(), e.getMessage(), e.getLocalizedMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("error", e.getMessage())).build();
+        }
     }
 
     @Override
     public Response deleteClient(Long id) {
-        clientService.delete(id);
-        return Response.status(Response.Status.OK).build();
+        try {
+            clientService.delete(id);
+            return Response.status(Response.Status.OK).build();
+        }catch (Exception e) {
+            log.error("createClient | Exception {}; cause : {} message: {}, localizedMessage: {}", e.getClass().getName(), e.getCause(), e.getMessage(), e.getLocalizedMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(Collections.singletonMap("error", e.getMessage())).build();
+        }
+
     }
 
     @Override
