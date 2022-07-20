@@ -1,11 +1,16 @@
 package com.multicert.test.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.multicert.test.domain.Client;
+import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
-public class ClientDTO {
+/**
+ * A DTO for the {@link Client} entity.
+ */
+public class PtClientDTO implements Serializable {
 
     private Long id;
 
@@ -13,13 +18,11 @@ public class ClientDTO {
     private String name;
 
     @NotNull
-    private String fiscalNumber;
+    private String nif;
 
     private String address;
 
     private Integer phone;
-
-    private String country;
 
     public Long getId() {
         return id;
@@ -37,12 +40,12 @@ public class ClientDTO {
         this.name = name;
     }
 
-    public String getFiscalNumber() {
-        return fiscalNumber;
+    public String getNif() {
+        return nif;
     }
 
-    public void setFiscalNumber(String fiscalNumber) {
-        this.fiscalNumber = fiscalNumber;
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
     public String getAddress() {
@@ -61,14 +64,6 @@ public class ClientDTO {
         this.phone = phone;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(this.id);
@@ -80,7 +75,7 @@ public class ClientDTO {
         return "StorageDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", fiscal_number=" + getFiscalNumber() +
+            ", nif=" + getNif() +
             ", address='" + getAddress() + "'" +
             ", phone=" + getPhone() +
             "}";

@@ -114,3 +114,8 @@ cxf:
   path: /api # CXFServlet URL pattern
   jaxrs:
     component-scan: true
+
+
+provider:
+  pt: true
+  es: true

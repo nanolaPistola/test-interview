@@ -32,14 +32,17 @@ public class ProvidersConfig {
     public Feature swagger2Feature() {
         Swagger2Feature result = new Swagger2Feature();
         result.setTitle("Spring Boot + CXF + Swagger Example");
-        result.setDescription("Spring Boot + CXF + Swagger Example description");
+        result.setDescription("Spring Boot + CXF + Swagger Example  Generic Api for Clients with multiple countries");
         result.setBasePath("/api");
         result.setVersion("v1");
-        result.setContact("Orlando L Otero");
-        result.setSchemes(new String[] { "http", "https" });
+        result.setContact("Gabriel Almeida");
+        result.setSchemes(new String[] { "http"});
         result.setPrettyPrint(true);
+        result.setScanAllResources(true);
+        result.setUsePathBasedConfig(true);
         return result;
     }
+
 
     @EventListener
     public void handleContextRefresh(ContextRefreshedEvent event) {

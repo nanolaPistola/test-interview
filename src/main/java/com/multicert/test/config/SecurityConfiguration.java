@@ -63,8 +63,7 @@ public class SecurityConfiguration {
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/BookService").permitAll();
+            .antMatchers("/management/prometheus").permitAll();
         return http.build();
         // @formatter:on
     }

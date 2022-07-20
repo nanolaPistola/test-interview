@@ -9,33 +9,25 @@
     <!--
         Added the entity Storage.
     -->
-    <changeSet id="20220716102923-1" author="jhipster">
-        <createTable tableName="client">
+    <changeSet id="config-1" author="develop">
+        <createTable tableName="config">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="fiscal_number" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="address" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="phone" type="integer">
-                <constraints nullable="true" />
             </column>
             <column name="country" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actions" type="${clobType}">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
-
-    <changeSet id="20220716102923-2" author="develop">
-        <addUniqueConstraint tableName="client" columnNames="fiscal_number, country" constraintName="unique_fiscal_number_and_country"/>
+    <changeSet id="config-2" author="develop">
+        <addUniqueConstraint tableName="config" columnNames="country" constraintName="unique_country"/>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
@@ -47,4 +39,15 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
+
+    <changeSet id="config-3" author="develop" >
+
+        <loadData encoding="UTF-8" tableName="config" file="config/liquibase/data/config_data.csv" separator=";">
+            <column name="id" type="NUMERIC"/>
+            <column name="country" type="STRING"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="actions" type="STRING"/>
+
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

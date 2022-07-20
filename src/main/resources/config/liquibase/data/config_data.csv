@@ -1,0 +1,4 @@
+id;country;active;actions
+1;spain;true;{"CREATE":true}
+2;portugal;true;{"CREATE":true}
+3;usa;true;{"CREATE":true}

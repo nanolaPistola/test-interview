@@ -3,7 +3,9 @@ package com.multicert.test.service;
 import com.multicert.test.domain.Client;
 import com.multicert.test.repository.ClientRepository;
 import com.multicert.test.service.dto.ClientDTO;
-import com.multicert.test.service.mapper.StorageMapper;
+import com.multicert.test.service.dto.ClientDTO;
+import com.multicert.test.service.mapper.ClientMapper;
+import com.multicert.test.service.mapper.PtClientMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,24 +27,25 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    private final StorageMapper storageMapper;
+    private final ClientMapper clientMapper;
 
-    public ClientService(ClientRepository clientRepository, StorageMapper storageMapper) {
+    public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
-        this.storageMapper = storageMapper;
+        this.clientMapper = clientMapper;
     }
 
     /**
      * Save a storage.
      *
-     * @param clientDTO the entity to save.
+     * @param ClientDTO the entity to save.
      * @return the persisted entity.
      */
-    public ClientDTO save(ClientDTO clientDTO) {
-        log.trace("Request to save Storage : {}", clientDTO);
-        Client client = storageMapper.toEntity(clientDTO);
+    public ClientDTO save(ClientDTO ClientDTO, String country) {
+        log.trace("Request to save Storage : {}", ClientDTO);
+        Client client = clientMapper.toEntity(ClientDTO);
+        client.setCountry(country);
         client = clientRepository.save(client);
-        return storageMapper.toDto(client);
+        return clientMapper.toDto(client);
     }
 
 
@@ -53,9 +56,9 @@ public class ClientService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<ClientDTO> findAll(Pageable pageable) {
+    public Page<ClientDTO> findAll(Pageable pageable, String country) {
         log.trace("Request to get all Storages");
-        return clientRepository.findAll(pageable).map(storageMapper::toDto);
+        return clientRepository.findByCountry(country, pageable).map(clientMapper::toDto);
     }
 
 
@@ -64,18 +67,18 @@ public class ClientService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(Long id, String country) {
         log.trace("Request to delete Storage : {}", id);
-        clientRepository.deleteById(id);
+        clientRepository.deleteByIdAndCountry(id, country);
     }
 
-    public Optional<ClientDTO> findByNif(String nif) {
+    public Optional<ClientDTO> findByNif(String nif, String country) {
         log.trace("Request to findByNif Storage : {}", nif);
-        return clientRepository.findByNif(nif).map(storageMapper::toDto);
+        return clientRepository.findByFiscalNumberAndCountry(nif, country).map(clientMapper::toDto);
     }
 
-    public List<ClientDTO> findByNameLike(String name) {
+    public List<ClientDTO> findByNameLike(String name, String country) {
         log.trace("Request to findByNameLike Storage : {}", name);
-        return clientRepository.findByNameContainingIgnoreCase(name).stream().map(storageMapper::toDto).toList();
+        return clientRepository.findByNameContainingIgnoreCaseAndCountry(name, country).stream().map(clientMapper::toDto).toList();
     }
 }

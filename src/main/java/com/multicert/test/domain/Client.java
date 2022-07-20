@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
  * A Storage.
  */
 @Entity
-@Table(name = "client", uniqueConstraints = {@UniqueConstraint(columnNames = "nif")})
+@Table(name = "client", uniqueConstraints = {@UniqueConstraint(columnNames = {"fiscal_number", "country"})})
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,8 +27,8 @@ public class Client implements Serializable {
 
     @NotNull
     @Length(min = 9, max = 9)
-    @Column(name = "nif", nullable = false)
-    private String nif;
+    @Column(name = "fiscal_number", nullable = false)
+    private String fiscalNumber;
 
     @Column(name = "address")
     private String address;
@@ -37,6 +37,9 @@ public class Client implements Serializable {
     @Min(value = 111111111)
     @Max(value = 999999999)
     private Integer phone;
+
+    @Column(name = "country")
+    private String country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -66,17 +69,17 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public String getNif() {
-        return this.nif;
+    public String getFiscalNumber() {
+        return this.fiscalNumber;
     }
 
     public Client nif(String nif) {
-        this.setNif(nif);
+        this.setFiscalNumber(nif);
         return this;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public void setFiscalNumber(String nif) {
+        this.fiscalNumber = nif;
     }
 
     public String getAddress() {
@@ -107,6 +110,15 @@ public class Client implements Serializable {
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -130,7 +142,7 @@ public class Client implements Serializable {
         return "Storage{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", nif=" + getNif() +
+            ", fiscalNumber=" + getFiscalNumber() +
             ", address='" + getAddress() + "'" +
             ", phone=" + getPhone() +
             "}";
